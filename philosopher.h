@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/06 00:39:12 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/07/26 23:55:49 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_philosopher
 	long 	last_food_time;
 	
 } t_philosopher;
-//philo parameters 
+//philo parameter
 typedef struct s_philo_arg
 {
 	long	num_philo;
