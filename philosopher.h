@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/27 00:13:30 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/07/27 09:28:16 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <limits.h> /
+#include <limits.h> 
 #include <string.h>
 #include <stdbool.h>
 
@@ -59,5 +59,5 @@ struct s_philo_arg
     t_fork *m_forks; // array of forks
     t_philosopher *philosophers; // array of philosophers
 };
-
+void handle_error(const char *str);
 #endif // PHILOSOPHER_H
