@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/27 09:28:16 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:41:20 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,8 @@ struct s_philo_arg
     t_fork *m_forks; // array of forks
     t_philosopher *philosophers; // array of philosophers
 };
-void handle_error(const char *str);
+void	reading_input(t_philo_arg *philo_av, char **argv);
+void    handle_error(const char *str);
+const char	*acceptable_input(const char *str);
+long atol(const char *str);
 #endif // PHILOSOPHER_H
