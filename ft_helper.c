@@ -6,11 +6,16 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 00:42:47 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/29 14:40:49 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:33:06 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
+
+long convert_to_millisec(const char *time_str)
+{
+    return (atol(time_str) * 1000);
+}
 
 void handle_error(const char *str)
 {

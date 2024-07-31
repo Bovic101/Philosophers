@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_main.c                                          :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 00:14:10 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/31 12:33:25 by vodebunm         ###   ########.fr       */
+/*   Created: 2024/07/31 10:44:00 by vodebunm          #+#    #+#             */
+/*   Updated: 2024/07/31 12:31:27 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-// ./philo 5 700 200 200 [6]
-int main(int argc, char **argv)
+
+void	data_init(t_philo_arg *philo_av)
 {
-	t_philo_arg philo_av;
+	int i;
 	
-	if (argc == 5 || argc == 6)
+	i = -1;
+	philo_av->end_activity = false;
+	philo_av->philosophers = malloc_control(sizeof(t_philosopher)* philo_av->num_philo);
+	philo_av->m_forks = malloc_control(sizeof(t_fork)* philo_av->num_philo );
+	while (++i < philo_av->num_philo)
 	{
-		//1checking error, filling the table
-		reading_input(&philo_av, argv);
-		//2 :creating the actual thing
-		data_init(&philo_av);
-		start_simulation(&philo_av);//3:dining start
-		clean(&philo_av);//To do is for when all philo is full or 1 die
-	}
-	else
-	{
-		handle_error("Incorrect input, please pass atleast 5 arg\n");
+		mutex_control(&philo_av->m_forks[i],MUTEX_INIT);
+		philo_av->m_forks[i].fid = i; 
 	}
 	
 }
