@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/31 12:33:40 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/02 11:12:32 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ long atol(const char *str);
 long convert_to_millisec(const char *time_str);
 void	mutex_control(t_mutex *mutex, t_mutexfunc mutexfunc);
 void	thread_control(pthread_t *thread, void *(*start)(void *), void *arg, t_mutexfunc mutexfunc);
+void	philosopher_init(t_philo_arg *philo_av);
+void    m_fork_alloc(t_philosopher *philo_av, t_fork *forks, int philosopher_pos);
+void	data_init(t_philo_arg *philo_av);
 
 #endif // PHILOSOPHER_H
