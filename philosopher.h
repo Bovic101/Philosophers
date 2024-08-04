@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/02 11:12:32 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:47:12 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <stdbool.h>
 
-// Structure definitions
+// Structure definition
 typedef pthread_mutex_t t_mutex;
 
 // Forward declaration of the structure
@@ -39,6 +39,25 @@ typedef enum mutexfunc
     MUTEX_JOIN,
     MUTEX_DESTROY,
 }       t_mutexfunc;
+
+
+typedef enum e_philo_action 
+{
+    EATING,
+    SLEEPING,
+    THINKING,
+    M_RIGHT_FORK,
+    M_LEFT_FORK,
+    DEAD,
+}    t_philo_action;
+
+typedef enum e_timeofday
+{
+    SECOND,
+    MILLISECOND,
+    MICROSECOND,
+}       t_timeofday;
+
 
 typedef struct s_fork
 {
@@ -68,8 +87,12 @@ struct s_philo_arg
     long num_time_2_eat; // number of times each philosopher must eat Flag if -1
     long start_activity;
     bool end_activity; // philosopher is full or dies
+    pthread_mutex_t philo_av_mutex;//data races avoidance
     t_fork *m_forks; // array of forks
     t_philosopher *philosophers; // array of philosophers
+    t_mutex mutex_write_status;
+    bool synchronize_thread;
+
 };
 void	*malloc_control(size_t type);
 void	reading_input(t_philo_arg *philo_av, char **argv);
@@ -82,5 +105,15 @@ void	thread_control(pthread_t *thread, void *(*start)(void *), void *arg, t_mute
 void	philosopher_init(t_philo_arg *philo_av);
 void    m_fork_alloc(t_philosopher *philo_av, t_fork *forks, int philosopher_pos);
 void	data_init(t_philo_arg *philo_av);
-
+void	*dinner_simulation(void *argv);
+void	bool_assign(t_mutex *mutex, bool *s, bool value);
+bool	bool_retrieve(t_mutex *mutex, bool *value);
+void	long_assign(t_mutex *mutex, long *s, long value);
+bool	long_retrieve(t_mutex *mutex, long *value);
+bool	end_of_simulation(t_philo_arg *philo_av);
+void	delay_threads(t_philo_arg *philo_av);
+long	get_timeofday(t_timeofday timeofday);
+void    ft_usleep(long t, t_philo_arg *philo_av);
+void	mutex_write_debug(t_philo_action action, t_philosopher *philo_av, long buf);
+void	mutex_write(t_philo_action action, t_philosopher *philo_av, bool debug);
 #endif // PHILOSOPHER_H

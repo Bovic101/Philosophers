@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 10:44:00 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/02 11:11:29 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:46:12 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	data_init(t_philo_arg *philo_av)
 	
 	i = -1;
 	philo_av->end_activity = false;
+	philo_av->synchronize_thread = false;
 	philo_av->philosophers = malloc_control(sizeof(t_philosopher)* philo_av->num_philo);
+	mutex_control(&philo_av->philo_av_mutex,MUTEX_INIT);//problem
+	mutex_control(&philo_av->mutex_write_status,MUTEX_INIT);
 	philo_av->m_forks = malloc_control(sizeof(t_fork)* philo_av->num_philo );
 	while (++i < philo_av->num_philo)
 	{
