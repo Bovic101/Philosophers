@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 00:42:47 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/31 12:33:06 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:32:41 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,71 @@ long convert_to_millisec(const char *time_str)
 
 void handle_error(const char *str)
 {
-	printf("Error occured:%s\n", str);
-	exit(EXIT_FAILURE);
+    printf("Error occurred: %s\n", str);
+    exit(EXIT_FAILURE);
 }
 
 static inline bool is_digit(char c)
 {
-	return( c >= '0' && c <= '9');
+    return (c >= '0' && c <= '9');
 }
 
-const char	*acceptable_input(const char *str)
+const char *acceptable_input(const char *str)
 {
-	int length;
-	const char *nbr;
-	
-	length = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-	{
-		str++;
-	}
-	if (*str == '+')
-	{
-		str++;
-	}
-	else if (*str == '-')
-	{
-		handle_error("Negative value not allowed");
-	}
-	if (!is_digit(*str))
-	{
-		handle_error("The digit is not within the acceptable range");
-	}
-	nbr = str;
-	while (is_digit(*str++))
-	{
-		length++;
-	}
-	if (length > 10)
-		handle_error("digit range is beyond accepatable limit");	
+    int length = 0;
+    const char *nbr;
+
+    if (str == NULL)  // Ensure the input string is not null
+    {
+        handle_error("Input string is null");
+    }
+
+    while ((*str >= 9 && *str <= 13) || *str == 32)  // Skip white spaces
+    {
+        str++;
+    }
+    if (*str == '+')
+    {
+        str++;
+    }
+    else if (*str == '-')
+    {
+        handle_error("Negative value not allowed");
+    }
+    if (!is_digit(*str))
+    {
+        handle_error("The digit is not within the acceptable range");
+    }
+
+    nbr = str;
+    while (is_digit(*str))
+    {
+        length++;
+        str++;
+    }
+
+    if (length > 10)
+    {
+        handle_error("Digit range is beyond acceptable limit");
+    }
+
+    return nbr;  // Return the pointer to the start of the number
 }
 
-long atol(const char *str)
+long atol_custom(const char *str)  // Renamed to avoid conflict with standard library function
 {
-	long nbr;
-	
-	nbr = 0;
-	str = acceptable_input(str);
-	while (is_digit(*str))
-	{
-		nbr = (nbr * 10) + (*str++ - '0');
-	}
-	if (nbr > INT_MAX)
-	{
-		handle_error("digit range is beyond accepatable limit");
-	}
-	return(nbr);
+    long nbr = 0;
+
+    str = acceptable_input(str);
+    while (is_digit(*str))
+    {
+        nbr = (nbr * 10) + (*str++ - '0');
+    }
+
+    if (nbr > INT_MAX)
+    {
+        handle_error("Digit range is beyond acceptable limit");
+    }
+
+    return nbr;
 }

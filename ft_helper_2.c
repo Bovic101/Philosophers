@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 10:59:15 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/07/31 12:32:52 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:32:24 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	thread_control(pthread_t *thread, void *(*start)(void *), void *arg, t_mute
 		handle_error("Thread return status function erroe");
 	}
 }
+
 
 
 

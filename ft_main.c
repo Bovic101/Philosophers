@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 00:14:10 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/02 11:12:09 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:32:58 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		//2 :creating the actual thing
 		data_init(&philo_av);
 		start_simulation(&philo_av);//3:dining start next
-		clean(&philo_av);//To do is for when all philo is full or 1 die
+		//clean(&philo_av);//To do is for when all philo is full or 1 die
 	}
 	else
 	{

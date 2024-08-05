@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/04 16:47:12 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:33:33 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <string.h>
 #include <errno.h>
 #include <stdbool.h>
+
+#define DEBUG_MODE 0
 
 // Structure definition
 typedef pthread_mutex_t t_mutex;
@@ -74,6 +76,7 @@ typedef struct s_philosopher
     long food_count;
     bool satisfy;
     long last_food_time;
+    t_mutex philo_mutex;//control data races with screen
     t_philo_arg *philo_arg;
 } t_philosopher;
 
@@ -98,7 +101,6 @@ void	*malloc_control(size_t type);
 void	reading_input(t_philo_arg *philo_av, char **argv);
 void    handle_error(const char *str);
 const char	*acceptable_input(const char *str);
-long atol(const char *str);
 long convert_to_millisec(const char *time_str);
 void	mutex_control(t_mutex *mutex, t_mutexfunc mutexfunc);
 void	thread_control(pthread_t *thread, void *(*start)(void *), void *arg, t_mutexfunc mutexfunc);
@@ -116,4 +118,9 @@ long	get_timeofday(t_timeofday timeofday);
 void    ft_usleep(long t, t_philo_arg *philo_av);
 void	mutex_write_debug(t_philo_action action, t_philosopher *philo_av, long buf);
 void	mutex_write(t_philo_action action, t_philosopher *philo_av, bool debug);
+void	philo_eat(t_philosopher *philo_av);
+void	philo_thinking(t_philosopher *philo_av);
+void	start_simulation(t_philo_arg *philo_av);
+long    atol_custom(const char *str);
 #endif // PHILOSOPHER_H
+
