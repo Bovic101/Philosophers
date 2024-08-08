@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 22:00:51 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/05 11:33:33 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/08 07:01:12 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,13 @@ struct s_philo_arg
     long time_2_sleep;
     long num_time_2_eat; // number of times each philosopher must eat Flag if -1
     long start_activity;
+    long threads_run_num;
     bool end_activity; // philosopher is full or dies
     pthread_mutex_t philo_av_mutex;//data races avoidance
     t_fork *m_forks; // array of forks
     t_philosopher *philosophers; // array of philosophers
     t_mutex mutex_write_status;
+    pthread_t   monitor;
     bool synchronize_thread;
 
 };
@@ -119,8 +121,15 @@ void    ft_usleep(long t, t_philo_arg *philo_av);
 void	mutex_write_debug(t_philo_action action, t_philosopher *philo_av, long buf);
 void	mutex_write(t_philo_action action, t_philosopher *philo_av, bool debug);
 void	philo_eat(t_philosopher *philo_av);
-void	philo_thinking(t_philosopher *philo_av);
+void	philo_thinking(t_philosopher *philo_av, bool value);
 void	start_simulation(t_philo_arg *philo_av);
+void	long_increments( t_mutex *mutex, long *value);
 long    atol_custom(const char *str);
+void	*check_dinner(void *argv);
+void	*long_thread(void *argv);
+void    clean(t_philo_arg *philo_av);
+bool    threads_active(t_mutex *mutex, long *threads, long philo_num);
+void	disengage_threads(t_philosopher *philos);
+bool	philo_dead(t_philosopher *philo_av);
 #endif // PHILOSOPHER_H
 

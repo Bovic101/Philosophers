@@ -6,7 +6,7 @@
 /*   By: vodebunm <vodebunm@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 10:44:00 by vodebunm          #+#    #+#             */
-/*   Updated: 2024/08/05 11:32:02 by vodebunm         ###   ########.fr       */
+/*   Updated: 2024/08/08 06:17:39 by vodebunm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void data_init(t_philo_arg *philo_av)
 
     philo_av->end_activity = false;
     philo_av->synchronize_thread = false;
+    philo_av->threads_run_num = 0;
 
     // Allocate memory for philosophers
     philo_av->philosophers = malloc_control(sizeof(t_philosopher) * philo_av->num_philo);
@@ -79,10 +80,41 @@ void m_fork_alloc(t_philosopher *philo_av, t_fork *forks, int philosopher_pos)
     philo_av->right_m_fork = &forks[philosopher_pos];
 
     // Reassign forks for odd philosopher IDs to prevent deadlock
-    if (philo_av->id % 2 != 0)
+    if (philo_av->id % 2 == 0)
     {
         philo_av->left_m_fork = &forks[philosopher_pos];
         philo_av->right_m_fork = &forks[(philosopher_pos + 1) % philo_num];
+    }
+}
+void clean(t_philo_arg *table)
+{
+    int i = 0;
+
+    if (table == NULL)
+        return;
+
+    // Loop through each philosopher to destroy their mutexes
+    while (i < table->num_philo)
+    {
+        mutex_control(&table->philosophers[i].philo_mutex, MUTEX_DESTROY);
+        i++;
+    }
+
+    // Destroy the mutexes associated with the table
+    mutex_control(&table->mutex_write_status, MUTEX_DESTROY);
+    mutex_control(&table->philo_av_mutex, MUTEX_DESTROY);
+
+    // Free the dynamically allocated memory for forks and philosophers
+    if (table->m_forks != NULL)
+    {
+        free(table->m_forks);
+        table->m_forks = NULL; // Prevent potential double-free issues
+    }
+
+    if (table->philosophers != NULL)
+    {
+        free(table->philosophers);
+        table->philosophers = NULL; // Prevent potential double-free issues
     }
 }
 
